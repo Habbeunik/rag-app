@@ -1,38 +1,3 @@
-// Text processing utilities
-
-export function chunkText(
-	text: string,
-	chunkSize: number = 1000,
-	overlap: number = 200
-): string[] {
-	const chunks: string[] = [];
-	let start = 0;
-
-	while (start < text.length) {
-		const end = Math.min(start + chunkSize, text.length);
-		let chunk = text.slice(start, end);
-
-		// Try to break at sentence boundaries
-		if (end < text.length) {
-			const lastSentenceEnd = chunk.lastIndexOf('.');
-			const lastNewline = chunk.lastIndexOf('\n');
-			const breakPoint = Math.max(
-				lastSentenceEnd,
-				lastNewline
-			);
-
-			if (breakPoint > start + chunkSize * 0.5) {
-				chunk = chunk.slice(0, breakPoint + 1);
-			}
-		}
-
-		chunks.push(chunk.trim());
-		start = start + chunk.length - overlap;
-	}
-
-	return chunks.filter((chunk) => chunk.length > 0);
-}
-
 export function cleanText(text: string): string {
 	return text
 		.replace(/\s+/g, ' ') // Replace multiple whitespace with single space

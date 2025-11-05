@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, RotateCcw, Bot, User } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { MessageFormatter } from "@/components/MessageFormatter";
 
 interface ChatPageProps {
   documentId: string;
@@ -179,9 +180,10 @@ export default function ChatPage({
                   }
                 `}
               >
-                <p className="text-[15px] leading-relaxed whitespace-pre-wrap">
-                  {message.content}
-                </p>
+                <MessageFormatter 
+                  content={message.content} 
+                  isUser={message.role === "user"}
+                />
               </div>
               {message.role === "user" && (
                 <div className="shrink-0 w-10 h-10 rounded-xl bg-blue-600 dark:bg-blue-500 flex items-center justify-center">
